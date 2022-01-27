@@ -26,6 +26,7 @@ module.exports = class ShwarmaOrder extends Order {
     this.sItem = "country BBQ";
     this.sItem2 = "Soup";
     this.sItem2_type = "Mushroom";
+    this.total = 0;
   }
   handleInput(sInput) {
     let aReturn = [];
@@ -44,22 +45,30 @@ module.exports = class ShwarmaOrder extends Order {
         this.stateCur = OrderState.DRINKS;
         this.sType = sInput;
         console.log("1");
-        aReturn.push("Would you like a drink with that? If yes please specify");
+        aReturn.push(
+          "Would you like a drink with that for +$2? If yes please specify"
+        );
         break;
       case OrderState.DRINKS:
         this.stateCur = OrderState.FRUITS;
         if (sInput.toLowerCase() != "no") {
           this.sDrinks = sInput;
+          this.total = this.total + 2;
+          console.log(this.total);
         }
         console.log("2");
-        aReturn.push("Would you like a fruit with that? If yes please specify");
+        aReturn.push(
+          "Would you like a fruit with that for +$3? If yes please specify"
+        );
         break;
       case OrderState.FRUITS:
         this.stateCur = OrderState.TYPE2;
         if (sInput.toLowerCase() != "no") {
           this.sFruits = sInput;
+          this.total = this.total + 3;
         }
         console.log("3");
+        console.log(this.total);
         aReturn.push(
           "Would you like a second item as well? If yes please specify"
         );
@@ -80,6 +89,11 @@ module.exports = class ShwarmaOrder extends Order {
           if (this.sFruits) {
             aReturn.push(`with a side of ${this.sFruits}`);
           }
+
+          aReturn.push(
+            `Total cost with tax is ${(this.total * 1.13).toFixed(2)}`
+          );
+
           let d = new Date();
           d.setMinutes(d.getMinutes() + 20);
           aReturn.push(`Please pick it up at ${d.toTimeString()}`);
@@ -87,21 +101,27 @@ module.exports = class ShwarmaOrder extends Order {
         }
         this.sType2 = sInput;
         console.log("4");
-        aReturn.push("Would you like a drink with that? If yes please specify");
+        aReturn.push(
+          "Would you like a drink with that for +$2? If yes please specify"
+        );
         break;
       case OrderState.DRINKS2:
         this.stateCur = OrderState.FRUITS2;
         if (sInput.toLowerCase() != "no") {
           this.sDrinks2 = sInput;
+          this.total = this.total + 2;
         }
         console.log("5");
-        aReturn.push("Would you like a fruit with that? If yes please specify");
+        aReturn.push(
+          "Would you like a fruit with that for +$3? If yes please specify"
+        );
         break;
       case OrderState.FRUITS2:
         this.isDone(true);
         console.log("here");
         if (sInput.toLowerCase() != "no") {
           this.sFruits2 = sInput;
+          this.total = this.total + 3;
         }
         aReturn.push("Thank-you for your order of");
         aReturn.push(
@@ -124,6 +144,10 @@ module.exports = class ShwarmaOrder extends Order {
         if (this.sFruits2) {
           aReturn.push(`with a side of ${this.sFruits2}`);
         }
+
+        aReturn.push(
+          `Total cost with tax is ${(this.total * 1.13).toFixed(2)}`
+        );
 
         let d = new Date();
         d.setMinutes(d.getMinutes() + 20);
