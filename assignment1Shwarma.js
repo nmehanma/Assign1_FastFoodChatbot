@@ -237,7 +237,7 @@ module.exports = class ShwarmaOrder extends Order {
         } else {
           this.sFlavour2 = sInput;
           aReturn.push(
-            "Would you like a drink with that for an extra $2? If yes please specify drink type else enter no"
+            "Would you like a drink with that for an extra $2? If yes please specify Coke, Sprite, Lemonade, Water, else enter no"
           );
         }
         break;
@@ -283,7 +283,7 @@ module.exports = class ShwarmaOrder extends Order {
           this.total = this.total + 3;
           this.isDone(true);
         } else if (sInput.toLowerCase() == "orange") {
-          this.sDrinks2 = sInput;
+          this.sFruits2 = sInput;
           this.total = this.total + 3;
           this.isDone(true);
         } else if (sInput.toLowerCase() != "no") {
