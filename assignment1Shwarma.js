@@ -105,25 +105,12 @@ module.exports = class ShwarmaOrder extends Order {
         break;
       case OrderState.DRINKS:
         this.stateCur = OrderState.FRUITS;
-        if (sInput.toLowerCase() == "coke") {
-          this.sDrinks = sInput;
-          this.total = this.total + 2;
-          aReturn.push(
-            "Would you like a fruit with that for an extra $3? If yes please specify apple or orange else enter no"
-          );
-        } else if (sInput.toLowerCase() == "sprite") {
-          this.sDrinks = sInput;
-          this.total = this.total + 2;
-          aReturn.push(
-            "Would you like a fruit with that for an extra $3? If yes please specify apple or orange else enter no"
-          );
-        } else if (sInput.toLowerCase() == "lemonade") {
-          this.sDrinks = sInput;
-          this.total = this.total + 2;
-          aReturn.push(
-            "Would you like a fruit with that for an extra $3? If yes please specify apple or orange else enter no"
-          );
-        } else if (sInput.toLowerCase() == "water") {
+        if (
+          sInput.toLowerCase() == "coke" ||
+          sInput.toLowerCase() == "sprite" ||
+          sInput.toLowerCase() == "lemonade" ||
+          sInput.toLowerCase() == "water"
+        ) {
           this.sDrinks = sInput;
           this.total = this.total + 2;
           aReturn.push(
@@ -140,13 +127,10 @@ module.exports = class ShwarmaOrder extends Order {
         break;
       case OrderState.FRUITS:
         this.stateCur = OrderState.SIZE2;
-        if (sInput.toLowerCase() == "apple") {
-          this.sFruits = sInput;
-          this.total = this.total + 3;
-          aReturn.push(
-            "Would you like a second item as well? If yes please specify either small medium or large else enter no"
-          );
-        } else if (sInput.toLowerCase() == "orange") {
+        if (
+          sInput.toLowerCase() == "apple" ||
+          sInput.toLowerCase() == "orange"
+        ) {
           this.sFruits = sInput;
           this.total = this.total + 3;
           aReturn.push(
@@ -244,25 +228,12 @@ module.exports = class ShwarmaOrder extends Order {
 
       case OrderState.DRINKS2:
         this.stateCur = OrderState.FRUITS2;
-        if (sInput.toLowerCase() == "coke") {
-          this.sDrinks2 = sInput;
-          this.total = this.total + 2;
-          aReturn.push(
-            "Would you like a fruit with that for an extra $3? If yes please specify apple or orange else enter no"
-          );
-        } else if (sInput.toLowerCase() == "sprite") {
-          this.sDrinks2 = sInput;
-          this.total = this.total + 2;
-          aReturn.push(
-            "Would you like a fruit with that for an extra $3? If yes please specify apple or orange else enter no"
-          );
-        } else if (sInput.toLowerCase() == "lemonade") {
-          this.sDrinks2 = sInput;
-          this.total = this.total + 2;
-          aReturn.push(
-            "Would you like a fruit with that for an extra $3? If yes please specify apple or orange else enter no"
-          );
-        } else if (sInput.toLowerCase() == "water") {
+        if (
+          sInput.toLowerCase() == "coke" ||
+          sInput.toLowerCase() == "sprite" ||
+          sInput.toLowerCase() == "lemonade" ||
+          sInput.toLowerCase() == "water"
+        ) {
           this.sDrinks2 = sInput;
           this.total = this.total + 2;
           aReturn.push(
@@ -278,11 +249,10 @@ module.exports = class ShwarmaOrder extends Order {
         }
         break;
       case OrderState.FRUITS2:
-        if (sInput.toLowerCase() == "apple") {
-          this.sFruits2 = sInput;
-          this.total = this.total + 3;
-          this.isDone(true);
-        } else if (sInput.toLowerCase() == "orange") {
+        if (
+          sInput.toLowerCase() == "apple" ||
+          sInput.toLowerCase() == "orange"
+        ) {
           this.sFruits2 = sInput;
           this.total = this.total + 3;
           this.isDone(true);
@@ -294,35 +264,35 @@ module.exports = class ShwarmaOrder extends Order {
           this.isDone(true);
         }
         aReturn.push("Thank-you for your order of");
+        aReturn.push(
+          `${this.sSize} meal from ${this.sItem} of type  ${this.sFlavour} ${this.sType}`
+        );
+        if (this.sDrinks) {
+          aReturn.push(`with a drink of ${this.sDrinks}`);
+        }
+        if (this.sFruits) {
+          aReturn.push(`with a side of ${this.sFruits}`);
+        }
+        if (this.sSize2) {
           aReturn.push(
-            `${this.sSize} meal from ${this.sItem} of type  ${this.sFlavour} ${this.sType}`
+            `and a second order of a ${this.sSize2} meal from ${this.sItem} of type ${this.sFlavour2} ${this.sType2}`
           );
-          if (this.sDrinks) {
-            aReturn.push(`with a drink of ${this.sDrinks}`);
-          }
-          if (this.sFruits) {
-            aReturn.push(`with a side of ${this.sFruits}`);
-          }
-          if (this.sSize2) {
-            aReturn.push(
-              `and a second order of a ${this.sSize2} meal from ${this.sItem} of type ${this.sFlavour2} ${this.sType2}`
-            );
-          }
-          if (this.sDrinks2) {
-            aReturn.push(`with a drink of ${this.sDrinks2}`);
-          }
-          if (this.sFruits2) {
-            aReturn.push(`with a side of ${this.sFruits2}`);
-          }
+        }
+        if (this.sDrinks2) {
+          aReturn.push(`with a drink of ${this.sDrinks2}`);
+        }
+        if (this.sFruits2) {
+          aReturn.push(`with a side of ${this.sFruits2}`);
+        }
 
-          aReturn.push(
-            `Total cost with tax is $${(this.total * 1.13).toFixed(2)}`
-          );
+        aReturn.push(
+          `Total cost with tax is $${(this.total * 1.13).toFixed(2)}`
+        );
 
-          let d = new Date();
-          d.setMinutes(d.getMinutes() + 20);
-          aReturn.push(`Please pick it up at ${d.toTimeString()}`);
-          break;
+        let d = new Date();
+        d.setMinutes(d.getMinutes() + 20);
+        aReturn.push(`Please pick it up at ${d.toTimeString()}`);
+        break;
     }
     return aReturn;
   }
