@@ -25,9 +25,9 @@ module.exports = class ShwarmaOrder extends Order {
     this.sDrinks2 = "";
     this.sFruits = "";
     this.sFruits2 = "";
-    this.sItem = "Conestoga Cafteria";
-    this.sItem2 = "Soup";
-    this.sItem2_type = "Mushroom";
+    this.sItem = "Conestoga Cafeteria";
+    //this.sItem2 = "Soup";
+    //this.sItem2_type = "Mushroom";
     this.total = 0;
   }
   handleInput(sInput) {
@@ -67,7 +67,7 @@ module.exports = class ShwarmaOrder extends Order {
         } else {
           this.sType = sInput;
           aReturn.push(
-            "Would you like a drink with that for an extra $2? If yes please specify drink type else say no"
+            "Would you like a drink with that for an extra $2? If yes please specify drink type else enter no"
           );
         }
         break;
@@ -79,7 +79,7 @@ module.exports = class ShwarmaOrder extends Order {
         }
         console.log("2");
         aReturn.push(
-          "Would you like a fruit with that for +$3? If yes please specify"
+          "Would you like a fruit with that for +$3? If yes please specify else enter no"
         );
         break;
       case OrderState.FRUITS:
@@ -90,7 +90,7 @@ module.exports = class ShwarmaOrder extends Order {
         }
         console.log("3");
         aReturn.push(
-          "Would you like a second item as well? If yes please specify either small medium or large else say no"
+          "Would you like a second item as well? If yes please specify either small medium or large else enter no"
         );
         break;
       case OrderState.SIZE2:
@@ -141,7 +141,7 @@ module.exports = class ShwarmaOrder extends Order {
         } else {
           this.sType2 = sInput;
           aReturn.push(
-            "Would you like a drink with that for an extra $2? If yes please specify drink type else say no"
+            "Would you like a drink with that for an extra $2? If yes please specify drink type else enter no"
           );
         }
         break;
@@ -153,7 +153,7 @@ module.exports = class ShwarmaOrder extends Order {
         }
         console.log("5");
         aReturn.push(
-          "Would you like a fruit with that for +$3? If yes please specify"
+          "Would you like a fruit with that for +$3? If yes please specify else enter no"
         );
         break;
       case OrderState.FRUITS2:
