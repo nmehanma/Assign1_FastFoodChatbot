@@ -9,6 +9,8 @@ const OrderState = Object.freeze({
   SECOND_ITEM: Symbol("second"),
   DRINKS: Symbol("drinks"),
   DRINKS2: Symbol("drinks"),
+  FLAVOUR: Symbol("flavour"),
+  FLAVOUR2: Symbol("flavour"),
   FRUITS: Symbol("Fruits"),
   FRUITS2: Symbol("Fruits")
 });
@@ -23,6 +25,8 @@ module.exports = class ShwarmaOrder extends Order {
     this.sType2 = "";
     this.sDrinks = "";
     this.sDrinks2 = "";
+    this.Flavour = "";
+    this.Flavour2 = "";
     this.sFruits = "";
     this.sFruits2 = "";
     this.sItem = "Conestoga Cafeteria";
@@ -60,12 +64,39 @@ module.exports = class ShwarmaOrder extends Order {
         }
         break;
       case OrderState.TYPE:
-        this.stateCur = OrderState.DRINKS;
-        if (sInput.toLowerCase() != "fish" && sInput.toLowerCase() != "burger" && sInput.toLowerCase() != "chicken") {
+        this.stateCur = OrderState.FLAVOUR;
+        if (
+          sInput.toLowerCase() != "fish" &&
+          sInput.toLowerCase() != "burger" &&
+          sInput.toLowerCase() != "chicken"
+        ) {
           aReturn.push("Please enter valid type");
           this.stateCur = OrderState.TYPE;
         } else {
           this.sType = sInput;
+          if (sInput.toLowerCase() == "fish") {
+            aReturn.push("Would you like salmon or tuna");
+          } else if (sInput.toLowerCase() == "burger") {
+            aReturn.push("Would you like beef or veggie");
+          } else if (sInput.toLowerCase() == "chicken") {
+            aReturn.push("Would you like crispy or grilled");
+          }
+        }
+        break;
+      case OrderState.FLAVOUR:
+        this.stateCur = OrderState.DRINKS;
+        if (
+          sInput.toLowerCase() != "salmon" &&
+          sInput.toLowerCase() != "tuna" &&
+          sInput.toLowerCase() != "beef" &&
+          sInput.toLowerCase() != "veggie" &&
+          sInput.toLowerCase() != "crispy" &&
+          sInput.toLowerCase() != "grilled"
+        ) {
+          aReturn.push("Please enter valid selection");
+          this.stateCur = OrderState.FLAVOUR;
+        } else {
+          this.sFlavour = sInput;
           aReturn.push(
             "Would you like a drink with that for an extra $2? If yes please specify drink type else enter no"
           );
@@ -77,7 +108,6 @@ module.exports = class ShwarmaOrder extends Order {
           this.sDrinks = sInput;
           this.total = this.total + 2;
         }
-        console.log("2");
         aReturn.push(
           "Would you like a fruit with that for +$3? If yes please specify else enter no"
         );
@@ -88,7 +118,6 @@ module.exports = class ShwarmaOrder extends Order {
           this.sFruits = sInput;
           this.total = this.total + 3;
         }
-        console.log("3");
         aReturn.push(
           "Would you like a second item as well? If yes please specify either small medium or large else enter no"
         );
@@ -113,7 +142,7 @@ module.exports = class ShwarmaOrder extends Order {
           this.isDone(true);
           aReturn.push("Thank-you for your order of");
           aReturn.push(
-            `${this.sSize} meal from ${this.sItem} of type ${this.sType}`
+            `${this.sSize} meal from ${this.sItem} of type ${this.sFlavour} ${this.sType}`
           );
           if (this.sDrinks) {
             aReturn.push(`with a drink of ${this.sDrinks}`);
@@ -134,38 +163,65 @@ module.exports = class ShwarmaOrder extends Order {
         }
         break;
       case OrderState.TYPE2:
-        this.stateCur = OrderState.DRINKS2;
-        if (sInput.toLowerCase() != "fish" && sInput.toLowerCase() != "burger" && sInput.toLowerCase() != "chicken") {
+        this.stateCur = OrderState.FLAVOUR2;
+        if (
+          sInput.toLowerCase() != "fish" &&
+          sInput.toLowerCase() != "burger" &&
+          sInput.toLowerCase() != "chicken"
+        ) {
           aReturn.push("Please enter valid type");
           this.stateCur = OrderState.TYPE2;
         } else {
           this.sType2 = sInput;
+          if (sInput.toLowerCase() == "fish") {
+            aReturn.push("Would you like salmon or tuna");
+          } else if (sInput.toLowerCase() == "burger") {
+            aReturn.push("Would you like beef or veggie");
+          } else if (sInput.toLowerCase() == "chicken") {
+            aReturn.push("Would you like crispy or grilled");
+          } 
+        }
+        break;
+
+      case OrderState.FLAVOUR2:
+        this.stateCur = OrderState.DRINKS2;
+        if (
+          sInput.toLowerCase() != "salmon" &&
+          sInput.toLowerCase() != "tuna" &&
+          sInput.toLowerCase() != "beef" &&
+          sInput.toLowerCase() != "veggie" &&
+          sInput.toLowerCase() != "crispy" &&
+          sInput.toLowerCase() != "grilled"
+        ) {
+          aReturn.push("Please enter valid selection");
+          this.stateCur = OrderState.FLAVOUR2;
+        } else {
+          this.sFlavour2 = sInput;
           aReturn.push(
             "Would you like a drink with that for an extra $2? If yes please specify drink type else enter no"
           );
         }
         break;
+
       case OrderState.DRINKS2:
         this.stateCur = OrderState.FRUITS2;
         if (sInput.toLowerCase() != "no") {
           this.sDrinks2 = sInput;
           this.total = this.total + 2;
         }
-        console.log("5");
         aReturn.push(
           "Would you like a fruit with that for +$3? If yes please specify else enter no"
         );
         break;
       case OrderState.FRUITS2:
         this.isDone(true);
-        console.log("here");
         if (sInput.toLowerCase() != "no") {
           this.sFruits2 = sInput;
           this.total = this.total + 3;
         }
         aReturn.push("Thank-you for your order of");
         aReturn.push(
-          `${this.sSize} meal from ${this.sItem} of type ${this.sType}`
+          `${this.sSize} meal from ${this.sItem} of type  ${this.sFlavour} ${this.sType}`
         );
         if (this.sDrinks) {
           aReturn.push(`with a drink of ${this.sDrinks}`);
@@ -175,7 +231,7 @@ module.exports = class ShwarmaOrder extends Order {
         }
         if (this.sSize2) {
           aReturn.push(
-            `and a second order of a ${this.sSize2} meal from ${this.sItem} of type ${this.sType2}`
+            `and a second order of a ${this.sSize2} meal from ${this.sItem} of type ${this.sFlavour2} ${this.sType2}`
           );
         }
         if (this.sDrinks2) {
