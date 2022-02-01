@@ -179,7 +179,7 @@ module.exports = class ShwarmaOrder extends Order {
             aReturn.push("Would you like beef or veggie");
           } else if (sInput.toLowerCase() == "chicken") {
             aReturn.push("Would you like crispy or grilled");
-          } 
+          }
         }
         break;
 
